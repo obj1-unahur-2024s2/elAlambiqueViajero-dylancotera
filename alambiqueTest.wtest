@@ -1,9 +1,26 @@
 import alambique.*
 
-describe "group of tests" {
+describe "test del alambique" {
 
-  test "test 1" {
-    assert.equals(100, 50+50)
+  test "luke puede visitar paris y buenos aires, por lo tanto visitó 2 luguares" {
+      luke.viajar(paris)
+      luke.viajar(buenosAires)
+      assert.equals(2, luke.cantidadLugaresVisitados())
   }
 
+  test "luke viaja con el alambique a 5 lugares y se queda sin gasolina" {
+    luke.viajar(buenosAires)
+    luke.viajar(bagdad)
+    luke.viajar(roma)
+    luke.viajar(paris)
+    luke.viajar(buenosAires)
+    assert.equals(0, alambiqueVeloz.combustible())
+  }
+}
+
+test "luke cambia a chatarraEspecial y no puede viajar a buenosAires ni tener recuerdo" {
+    luke.cambiarVehiculo(chatarraEspecial)
+    luke.viajar(buenosAires)
+    assert.equals(0, luke.cantidadLugaresVisitados())
+    assert.that( luke.ultimoRecuerdo().isEmpty() )
 }
