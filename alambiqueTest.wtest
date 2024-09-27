@@ -24,3 +24,55 @@ test "luke cambia a chatarraEspecial y no puede viajar a buenosAires ni tener re
     assert.equals(0, luke.cantidadLugaresVisitados())
     assert.that( luke.ultimoRecuerdo().isEmpty() )
 }
+
+
+describe "test de los autos locos" {
+  test "la carrera es en paris y participan los 5 vehiculos" {
+    carrera.inscribir(alambiqueVeloz)
+    carrera.inscribir(chatarraEspecial)
+    carrera.inscribir(antiguallaBlindada)
+    carrera.inscribir(superConvertible)
+    carrera.inscribir(superPerrari)
+    assert.equals(5, carrera.vehiculosAnotados().size())
+  }
+}
+
+test "la carrera es en paris, superPerrari gana por tener mayor velocidad Maxima" {
+    carrera.inscribir(alambiqueVeloz)
+    carrera.inscribir(chatarraEspecial)
+    carrera.inscribir(antiguallaBlindada)
+    carrera.inscribir(superConvertible)
+    carrera.inscribir(superPerrari)
+    carrera.irA(paris)
+
+    assert.equals(superPerrari, 
+    carrera.vehiculosAnotados().max({v => v.velocidadMaxima()}))
+}
+
+test "superPerrari hace trampa y pierde la carrera por restar velocida maxima
+      y gana alambiqueVeloz" {
+    carrera.inscribir(alambiqueVeloz)
+    carrera.inscribir(chatarraEspecial)
+    carrera.inscribir(antiguallaBlindada)
+    carrera.inscribir(superConvertible)
+    carrera.inscribir(superPerrari)
+    carrera.irA(paris)
+
+    superPerrari.hacerTrampa()
+    superPerrari.hacerTrampa()
+
+    assert.equals(alambiqueVeloz, 
+    carrera.vehiculosAnotados().max({v => v.velocidadMaxima()}))
+}
+
+test "la incripción a buenosAires tiene algún vehiculo rechazado" {
+    carrera.inscribir(alambiqueVeloz)
+    carrera.inscribir(chatarraEspecial)
+    carrera.inscribir(antiguallaBlindada)
+    carrera.inscribir(superConvertible)
+    carrera.inscribir(superPerrari)
+
+    carrera.cambiarCiudad(buenosAires)
+
+    assert.notThat(carrera.vehiculosRechazados().isEmpty())
+}
